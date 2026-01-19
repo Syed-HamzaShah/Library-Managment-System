@@ -1,16 +1,23 @@
 [
   {
-    "name": "Hamza Smith",
-    "email": "hamza@example.com",
+    "name": "Syed Hamza Shah",
+    "email": "syedhamzashah@gmail.com",
     "phone": "555-0101",
     "id": "m1",
     "joined_date": "2023-01-15"
   },
   {
-    "name": "Jane Doe",
-    "email": "jane@example.com",
+    "name": "Umar Afridi",
+    "email": "umar@example.com",
     "phone": "555-0102",
     "id": "m2",
     "joined_date": "2023-02-20"
+  },
+  {
+    "name": "Haider Ud Din",
+    "email": "haider@example.com",
+    "phone": "555-0103",
+    "id": "m3",
+    "joined_date": "2023-03-10"
   }
 ]

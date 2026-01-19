@@ -18,5 +18,105 @@
     "id": "b2",
     "available_copies": 3,
     "issued_copies": 0
+  },
+  {
+    "title": "To Kill a Mockingbird",
+    "author": "Harper Lee",
+    "isbn": "9780061120084",
+    "category": "Classic",
+    "total_copies": 4,
+    "id": "b3",
+    "available_copies": 4,
+    "issued_copies": 0
+  },
+  {
+    "title": "1984",
+    "author": "George Orwell",
+    "isbn": "9780451526342",
+    "category": "Fiction",
+    "total_copies": 6,
+    "id": "b4",
+    "available_copies": 6,
+    "issued_copies": 0
+  },
+  {
+    "title": "Python Crash Course",
+    "author": "Eric Matthes",
+    "isbn": "9781593279288",
+    "category": "Programming",
+    "total_copies": 4,
+    "id": "b5",
+    "available_copies": 4,
+    "issued_copies": 0
+  },
+  {
+    "title": "The Catcher in the Rye",
+    "author": "J.D. Salinger",
+    "isbn": "9780316769174",
+    "category": "Classic",
+    "total_copies": 3,
+    "id": "b6",
+    "available_copies": 3,
+    "issued_copies": 0
+  },
+  {
+    "title": "Design Patterns",
+    "author": "Gang of Four",
+    "isbn": "9780201633610",
+    "category": "Programming",
+    "total_copies": 2,
+    "id": "b7",
+    "available_copies": 2,
+    "issued_copies": 0
+  },
+  {
+    "title": "Pride and Prejudice",
+    "author": "Jane Austen",
+    "isbn": "9780141439518",
+    "category": "Classic",
+    "total_copies": 5,
+    "id": "b8",
+    "available_copies": 5,
+    "issued_copies": 0
+  },
+  {
+    "title": "Dune",
+    "author": "Frank Herbert",
+    "isbn": "9780441172719",
+    "category": "Science Fiction",
+    "total_copies": 4,
+    "id": "b9",
+    "available_copies": 4,
+    "issued_copies": 0
+  },
+  {
+    "title": "The Art of Computer Programming",
+    "author": "Donald Knuth",
+    "isbn": "9780201896831",
+    "category": "Programming",
+    "total_copies": 2,
+    "id": "b10",
+    "available_copies": 2,
+    "issued_copies": 0
+  },
+  {
+    "title": "Sapiens",
+    "author": "Yuval Noah Harari",
+    "isbn": "9780062316097",
+    "category": "Non-Fiction",
+    "total_copies": 5,
+    "id": "b11",
+    "available_copies": 5,
+    "issued_copies": 0
+  },
+  {
+    "title": "The Lord of the Rings",
+    "author": "J.R.R. Tolkien",
+    "isbn": "9780544003415",
+    "category": "Fantasy",
+    "total_copies": 3,
+    "id": "b12",
+    "available_copies": 3,
+    "issued_copies": 0
   }
 ]
