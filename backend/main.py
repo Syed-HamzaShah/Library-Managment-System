@@ -4,11 +4,10 @@ from app.routers import books, members, transactions, dashboard
 
 app = FastAPI(title="Library Management System API")
 
-
 origins = [
     "http://localhost:5173",
     "http://localhost:3000",
-    "*",
+    "https://cecos-library.vercel.app",
 ]
 
 app.add_middleware(
