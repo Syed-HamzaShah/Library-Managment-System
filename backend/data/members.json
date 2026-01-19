@@ -1,0 +1,16 @@
+[
+  {
+    "name": "Hamza Smith",
+    "email": "hamza@example.com",
+    "phone": "555-0101",
+    "id": "m1",
+    "joined_date": "2023-01-15"
+  },
+  {
+    "name": "Jane Doe",
+    "email": "jane@example.com",
+    "phone": "555-0102",
+    "id": "m2",
+    "joined_date": "2023-02-20"
+  }
+]

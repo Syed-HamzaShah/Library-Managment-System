@@ -1,0 +1,22 @@
+[
+  {
+    "title": "The Great Gatsby",
+    "author": "F. Scott Fitzgerald",
+    "isbn": "9780743273565",
+    "category": "Classic",
+    "total_copies": 5,
+    "id": "b1",
+    "available_copies": 5,
+    "issued_copies": 0
+  },
+  {
+    "title": "Clean Code",
+    "author": "Robert C. Martin",
+    "isbn": "9780132350884",
+    "category": "Programming",
+    "total_copies": 3,
+    "id": "b2",
+    "available_copies": 3,
+    "issued_copies": 0
+  }
+]
