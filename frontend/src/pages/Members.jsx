@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getMembers, createMember, deleteMember } from '../services/api';
 import { motion } from 'framer-motion';
-import { Plus, Search, Users } from 'lucide-react';
+import { Plus, Search, Users, X } from 'lucide-react';
 import { MemberRow } from '../components/members/MemberRow';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
@@ -97,7 +97,7 @@ const Members = () => {
                     </p>
                 </div>
                 <Button className="gradient-accent text-accent-foreground gap-2" onClick={() => setShowForm(!showForm)}>
-                    <Plus className="w-4 h-4" />
+                    {showForm ? <X className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
                     {showForm ? 'Cancel' : 'Add New Member'}
                 </Button>
             </div>

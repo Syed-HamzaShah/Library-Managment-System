@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getTransactions, issueBook, returnBook, getBooks, getMembers } from '../services/api';
 import { motion } from 'framer-motion';
-import { ArrowUpRight, ArrowDownLeft, Clock, Plus, Search } from 'lucide-react';
+import { ArrowUpRight, ArrowDownLeft, Clock, Plus, Search, X } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Badge } from '../components/ui/badge';
@@ -135,7 +135,7 @@ const IssueReturn = () => {
                     </p>
                 </div>
                 <Button className="gradient-accent text-accent-foreground gap-2" onClick={() => setShowIssueForm(!showIssueForm)}>
-                    <Plus className="w-4 h-4" />
+                    {showIssueForm ? <X className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
                     {showIssueForm ? 'Cancel' : 'Issue New Book'}
                 </Button>
             </div>

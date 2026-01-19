@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getBooks, createBook, deleteBook, updateBook } from '../services/api';
 import { motion } from 'framer-motion';
-import { Plus, Search, Filter } from 'lucide-react';
+import { Plus, Search, Filter, X } from 'lucide-react';
 import { BookCard } from '../components/books/BookCard';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
@@ -112,7 +112,7 @@ const Books = () => {
                     </p>
                 </div>
                 <Button className="gradient-accent text-accent-foreground gap-2" onClick={() => setShowForm(!showForm)}>
-                    <Plus className="w-4 h-4" />
+                    {showForm ? <X className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
                     {showForm ? 'Cancel' : 'Add New Book'}
                 </Button>
             </div>
