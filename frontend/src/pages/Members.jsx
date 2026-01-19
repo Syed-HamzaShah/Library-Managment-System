@@ -1,24 +1,57 @@
 import React, { useEffect, useState } from 'react';
 import { getMembers, createMember, deleteMember } from '../services/api';
+import { motion } from 'framer-motion';
+import { Plus, Search, Users } from 'lucide-react';
+import { MemberRow } from '../components/members/MemberRow';
+import { Button } from '../components/ui/button';
+import { Input } from '../components/ui/input';
+import { Tabs, TabsList, TabsTrigger } from '../components/ui/tabs';
 
 const Members = () => {
     const [members, setMembers] = useState([]);
+    const [filteredMembers, setFilteredMembers] = useState([]);
     const [search, setSearch] = useState('');
+    const [statusFilter, setStatusFilter] = useState('all');
     const [showForm, setShowForm] = useState(false);
     const [formData, setFormData] = useState({
         name: '', email: '', phone: ''
     });
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         loadMembers();
-    }, [search]);
+    }, []);
+
+    useEffect(() => {
+        let result = members;
+
+        if (search) {
+            result = result.filter(member =>
+                (member.name && member.name.toLowerCase().includes(search.toLowerCase())) ||
+                (member.email && member.email.toLowerCase().includes(search.toLowerCase())) ||
+                (member.id && member.id.toString().includes(search))
+            );
+        }
+
+        if (statusFilter !== 'all') {
+            result = result.filter((member) =>
+                statusFilter === 'active' ? (member.isActive !== false) : (member.isActive === false)
+            );
+        }
+
+        setFilteredMembers(result);
+    }, [search, statusFilter, members]);
 
     const loadMembers = async () => {
+        setLoading(true);
         try {
-            const data = await getMembers(search);
+            const data = await getMembers();
             setMembers(data);
+            setFilteredMembers(data);
         } catch (error) {
             console.error(error);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -34,10 +67,10 @@ const Members = () => {
         }
     };
 
-    const handleDelete = async (id) => {
-        if (window.confirm("Are you sure?")) {
+    const handleDelete = async (member) => {
+        if (window.confirm(`Are you sure you want to delete ${member.name}?`)) {
             try {
-                await deleteMember(id);
+                await deleteMember(member.id);
                 loadMembers();
             } catch (error) {
                 console.error(error);
@@ -45,75 +78,143 @@ const Members = () => {
         }
     };
 
+    const handleEdit = (member) => {
+        alert(`Edit feature for ${member.name} to be implemented fully.`);
+    };
+
     return (
-        <div>
-            <div className="flex justify-between items-center mb-6">
-                <h1>Member Management</h1>
-                <button className="btn btn-primary" onClick={() => setShowForm(!showForm)}>
-                    {showForm ? 'Close Form' : 'Add Member'}
-                </button>
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="space-y-8"
+        >
+            {/* Header */}
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <h1 className="text-3xl font-display font-bold text-gradient">Members</h1>
+                    <p className="text-muted-foreground mt-1">
+                        Manage library memberships and member information
+                    </p>
+                </div>
+                <Button className="gradient-accent text-accent-foreground gap-2" onClick={() => setShowForm(!showForm)}>
+                    <Plus className="w-4 h-4" />
+                    {showForm ? 'Cancel' : 'Add New Member'}
+                </Button>
             </div>
 
+            {/* Form Card */}
             {showForm && (
-                <div className="card">
-                    <form onSubmit={handleSubmit}>
-                        <div className="flex gap-4">
-                            <div className="form-group" style={{ flex: 1 }}>
-                                <label>Name</label>
-                                <input required value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} />
+                <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="bg-card border border-border rounded-xl p-6 shadow-sm"
+                >
+                    <h2 className="text-lg font-semibold mb-4">Add New Member</h2>
+                    <form onSubmit={handleSubmit} className="space-y-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                                <label className="text-sm font-medium">Name</label>
+                                <Input required value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} placeholder="Full Name" />
                             </div>
-                            <div className="form-group" style={{ flex: 1 }}>
-                                <label>Email</label>
-                                <input type="email" required value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} />
+                            <div className="space-y-2">
+                                <label className="text-sm font-medium">Email</label>
+                                <Input type="email" required value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} placeholder="Email Address" />
                             </div>
-                            <div className="form-group" style={{ flex: 1 }}>
-                                <label>Phone</label>
-                                <input required value={formData.phone} onChange={e => setFormData({ ...formData, phone: e.target.value })} />
+                            <div className="space-y-2">
+                                <label className="text-sm font-medium">Phone</label>
+                                <Input required value={formData.phone} onChange={e => setFormData({ ...formData, phone: e.target.value })} placeholder="Phone Number" />
                             </div>
                         </div>
-                        <button type="submit" className="btn btn-primary">Save Member</button>
+                        <div className="flex justify-end">
+                            <Button type="submit">Save Member</Button>
+                        </div>
                     </form>
+                </motion.div>
+            )}
+
+            {/* Stats */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="bg-card border border-border rounded-xl p-4 flex items-center gap-4">
+                    <div className="p-3 rounded-lg bg-primary/10">
+                        <Users className="w-5 h-5 text-primary" />
+                    </div>
+                    <div>
+                        <p className="text-2xl font-bold">{members.length}</p>
+                        <p className="text-sm text-muted-foreground">Total Members</p>
+                    </div>
+                </div>
+                <div className="bg-card border border-border rounded-xl p-4 flex items-center gap-4">
+                    <div className="p-3 rounded-lg bg-success/10">
+                        <Users className="w-5 h-5 text-success" />
+                    </div>
+                    <div>
+                        <p className="text-2xl font-bold">{members.filter((m) => m.isActive !== false).length}</p>
+                        <p className="text-sm text-muted-foreground">Active Members</p>
+                    </div>
+                </div>
+                <div className="bg-card border border-border rounded-xl p-4 flex items-center gap-4">
+                    <div className="p-3 rounded-lg bg-accent/10">
+                        <Users className="w-5 h-5 text-accent" />
+                    </div>
+                    <div>
+                        <p className="text-2xl font-bold">
+                            {members.filter((m) => m.membershipType === 'premium').length}
+                        </p>
+                        <p className="text-sm text-muted-foreground">Premium Members</p>
+                    </div>
+                </div>
+            </div>
+
+            {/* Filters */}
+            <div className="flex flex-col md:flex-row gap-4">
+                <div className="relative flex-1">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                    <Input
+                        placeholder="Search by name, email, or member ID..."
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        className="pl-10"
+                    />
+                </div>
+                <Tabs value={statusFilter} onValueChange={setStatusFilter}>
+                    <TabsList>
+                        <TabsTrigger value="all">All</TabsTrigger>
+                        <TabsTrigger value="active">Active</TabsTrigger>
+                        <TabsTrigger value="inactive">Inactive</TabsTrigger>
+                    </TabsList>
+                </Tabs>
+            </div>
+
+            {/* Results Count */}
+            <p className="text-sm text-muted-foreground">
+                Showing {filteredMembers.length} of {members.length} members
+            </p>
+
+            {/* Member List */}
+            {loading ? (
+                <div className="flex items-center justify-center h-64">
+                    <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full" />
+                </div>
+            ) : (
+                <div className="space-y-3">
+                    {filteredMembers.map((member, index) => (
+                        <MemberRow
+                            key={member.id}
+                            member={member}
+                            index={index}
+                            onEdit={handleEdit}
+                            onDelete={handleDelete}
+                        />
+                    ))}
                 </div>
             )}
 
-            <div className="card">
-                <div className="form-group">
-                    <input
-                        placeholder="Search by name or ID..."
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                    />
+            {!loading && filteredMembers.length === 0 && (
+                <div className="text-center py-12">
+                    <p className="text-muted-foreground">No members found matching your criteria.</p>
                 </div>
-                <div className="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Phone</th>
-                                <th>ID</th>
-                                <th>Joined Date</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {members.map(member => (
-                                <tr key={member.id}>
-                                    <td>{member.name}</td>
-                                    <td>{member.email}</td>
-                                    <td>{member.phone}</td>
-                                    <td><small>{member.id}</small></td>
-                                    <td>{member.joined_date}</td>
-                                    <td>
-                                        <button className="btn btn-danger btn-sm" onClick={() => handleDelete(member.id)}>Delete</button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+            )}
+        </motion.div>
     );
 };
 

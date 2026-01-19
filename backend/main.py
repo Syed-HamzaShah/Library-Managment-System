@@ -4,9 +4,9 @@ from app.routers import books, members, transactions, dashboard
 
 app = FastAPI(title="Library Management System API")
 
-# CORS Setup
+
 origins = [
-    "http://localhost:5173",  # React app default port
+    "http://localhost:5173",
     "http://localhost:3000",
     "*",
 ]

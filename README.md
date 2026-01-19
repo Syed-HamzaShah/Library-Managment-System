@@ -6,20 +6,24 @@ This project uses a local file system for data storage (JSON files), making it d
 ## 🚀 Features
 
 ### 📚 Book Management
+
 - Add, Edit, Delete Books.
 - Search by Title, Author, ISBN, Category.
 - Track available vs total copies.
 
 ### 👤 Member Management
+
 - Add, Edit, Remove Members.
 - View member details and history.
 
 ### 🔄 Issue & Return
+
 - Issue books to members.
 - validations (e.g. check availability).
 - Return books and calculate **Fines** automatically for late returns.
 
 ### 📊 Dashboard
+
 - View total stats: Books, Members, Active Issues, Overdue Books.
 
 ## 📂 Project Structure
@@ -84,5 +88,6 @@ This project uses a local file system for data storage (JSON files), making it d
    The App will run at `http://localhost:5173`.
 
 ## 📝 Notes
+
 - **Data Persistence**: All data is saved in `backend/data/*.json`. You can backup these files to save the state.
-- **Fine Calculation**: Fines are calculated at $5/day for overdue books.
+- **Fine Calculation**: Fines are calculated at 5/day for overdue books.
