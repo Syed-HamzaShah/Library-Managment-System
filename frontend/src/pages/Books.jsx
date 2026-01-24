@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { getBooks, createBook, deleteBook, updateBook } from '../services/api';
+import { getBooks, createBook, deleteBook } from '../services/api';
 import { motion } from 'framer-motion';
 import { Plus, Search, Filter, X } from 'lucide-react';
 import { BookCard } from '../components/books/BookCard';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
+import { useNavigate } from 'react-router-dom';
 import {
     Select,
     SelectContent,
@@ -14,6 +15,7 @@ import {
 } from '../components/ui/select';
 
 const Books = () => {
+    const navigate = useNavigate();
     const [books, setBooks] = useState([]);
     const [filteredBooks, setFilteredBooks] = useState([]);
     const [search, setSearch] = useState('');
@@ -83,16 +85,9 @@ const Books = () => {
         }
     };
 
-    const handleEdit = (book) => {
-        // Populate form and show it
-        // Note: The original generic form might need adjustment for updates vs creates
-        // For now we just alert as we focus on UI
-        alert(`Edit feature for ${book.title} to be implemented fully.`);
-    };
-
     const handleIssue = (book) => {
-        // Navigate or show issue modal
-        window.location.href = "/issue-return";
+        // Client-side navigation (avoid full page reload / 404 on refresh-unaware servers)
+        navigate('/issue-return', { state: { preselectedBookId: book?.id } });
     };
 
     const categories = ['all', ...new Set(books.map((b) => b.category))];
@@ -197,7 +192,6 @@ const Books = () => {
                         <BookCard
                             key={book.id}
                             book={book}
-                            onEdit={handleEdit}
                             onDelete={handleDelete}
                             onIssue={handleIssue}
                         />

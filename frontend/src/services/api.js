@@ -16,11 +16,6 @@ export const createBook = async (book) => {
     return response.data;
 };
 
-export const updateBook = async (id, book) => {
-    const response = await api.put(`/books/${id}`, book);
-    return response.data;
-};
-
 export const deleteBook = async (id) => {
     const response = await api.delete(`/books/${id}`);
     return response.data;
@@ -33,11 +28,6 @@ export const getMembers = async (search = '') => {
 
 export const createMember = async (member) => {
     const response = await api.post('/members/', member);
-    return response.data;
-};
-
-export const updateMember = async (id, member) => {
-    const response = await api.put(`/members/${id}`, member);
     return response.data;
 };
 

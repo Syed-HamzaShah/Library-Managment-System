@@ -70,10 +70,6 @@ const Members = () => {
         }
     };
 
-    const handleEdit = (member) => {
-        alert(`Edit feature for ${member.name} to be implemented fully.`);
-    };
-
     return (
         <motion.div
             initial={{ opacity: 0 }}
@@ -165,7 +161,6 @@ const Members = () => {
                             key={member.id}
                             member={member}
                             index={index}
-                            onEdit={handleEdit}
                             onDelete={handleDelete}
                         />
                     ))}

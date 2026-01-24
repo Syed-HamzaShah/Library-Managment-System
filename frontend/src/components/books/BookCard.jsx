@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion';
 import { Badge } from '../../components/ui/badge';
 import { Button } from '../../components/ui/button';
-import { Edit, Trash2 } from 'lucide-react';
+import { Trash2 } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
-export function BookCard({ book, onEdit, onDelete, onIssue }) {
+export function BookCard({ book, onDelete, onIssue }) {
     // Use book.available_copies or availableCopies depending on API response.
     // The user's API returns available_copies (snake_case)
     const availableCopies = book.available_copies ?? book.availableCopies ?? 0;
@@ -44,9 +44,6 @@ export function BookCard({ book, onEdit, onDelete, onIssue }) {
                         onClick={() => onIssue?.(book)}
                     >
                         Issue Book
-                    </Button>
-                    <Button size="sm" variant="outline" onClick={() => onEdit?.(book)}>
-                        <Edit className="w-4 h-4" />
                     </Button>
                     <Button size="sm" variant="outline" onClick={() => onDelete?.(book)}>
                         <Trash2 className="w-4 h-4" />

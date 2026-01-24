@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getTransactions, issueBook, returnBook, getBooks, getMembers } from '../services/api';
 import { motion } from 'framer-motion';
 import { ArrowUpRight, ArrowDownLeft, Clock, Plus, Search, X } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Badge } from '../components/ui/badge';
@@ -22,6 +23,7 @@ const statusConfig = {
 };
 
 const IssueReturn = () => {
+    const location = useLocation();
     const [transactions, setTransactions] = useState([]);
     const [books, setBooks] = useState([]);
     const [members, setMembers] = useState([]);
@@ -37,6 +39,14 @@ const IssueReturn = () => {
     useEffect(() => {
         loadData();
     }, []);
+
+    useEffect(() => {
+        const preselectedBookId = location?.state?.preselectedBookId;
+        if (preselectedBookId) {
+            setShowIssueForm(true);
+            setIssueData((prev) => ({ ...prev, book_id: String(preselectedBookId) }));
+        }
+    }, [location?.state?.preselectedBookId]);
 
     useEffect(() => {
         let result = transactions;

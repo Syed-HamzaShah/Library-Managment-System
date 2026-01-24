@@ -1,9 +1,9 @@
 import { motion } from 'framer-motion';
 import { Button } from '../../components/ui/button';
 import { Avatar, AvatarFallback } from '../../components/ui/avatar';
-import { Edit, Trash2, Mail, Phone } from 'lucide-react';
+import { Trash2, Mail, Phone } from 'lucide-react';
 
-export function MemberRow({ member, index, onEdit, onDelete }) {
+export function MemberRow({ member, index, onDelete }) {
     // Handle user's data structure where name is single string
     const firstName = member.name ? member.name.split(' ')[0] : 'Unknown';
     const lastName = member.name && member.name.split(' ').length > 1 ? member.name.split(' ').slice(1).join(' ') : '';
@@ -46,9 +46,6 @@ export function MemberRow({ member, index, onEdit, onDelete }) {
             </div>
 
             <div className="flex gap-2">
-                <Button size="sm" variant="outline" onClick={() => onEdit?.(member)}>
-                    <Edit className="w-4 h-4" />
-                </Button>
                 <Button size="sm" variant="outline" onClick={() => onDelete?.(member)}>
                     <Trash2 className="w-4 h-4" />
                 </Button>
