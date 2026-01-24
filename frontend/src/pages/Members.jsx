@@ -5,13 +5,11 @@ import { Plus, Search, Users, X } from 'lucide-react';
 import { MemberRow } from '../components/members/MemberRow';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
-import { Tabs, TabsList, TabsTrigger } from '../components/ui/tabs';
 
 const Members = () => {
     const [members, setMembers] = useState([]);
     const [filteredMembers, setFilteredMembers] = useState([]);
     const [search, setSearch] = useState('');
-    const [statusFilter, setStatusFilter] = useState('all');
     const [showForm, setShowForm] = useState(false);
     const [formData, setFormData] = useState({
         name: '', email: '', phone: ''
@@ -33,14 +31,8 @@ const Members = () => {
             );
         }
 
-        if (statusFilter !== 'all') {
-            result = result.filter((member) =>
-                statusFilter === 'active' ? (member.isActive !== false) : (member.isActive === false)
-            );
-        }
-
         setFilteredMembers(result);
-    }, [search, statusFilter, members]);
+    }, [search, members]);
 
     const loadMembers = async () => {
         setLoading(true);
@@ -93,7 +85,7 @@ const Members = () => {
                 <div>
                     <h1 className="text-3xl font-display font-bold text-gradient">Members</h1>
                     <p className="text-muted-foreground mt-1">
-                        Manage library memberships and member information
+                        Manage members and member information
                     </p>
                 </div>
                 <Button className="gradient-accent text-accent-foreground gap-2" onClick={() => setShowForm(!showForm)}>
@@ -133,7 +125,7 @@ const Members = () => {
             )}
 
             {/* Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 gap-4">
                 <div className="bg-card border border-border rounded-xl p-4 flex items-center gap-4">
                     <div className="p-3 rounded-lg bg-primary/10">
                         <Users className="w-5 h-5 text-primary" />
@@ -143,46 +135,17 @@ const Members = () => {
                         <p className="text-sm text-muted-foreground">Total Members</p>
                     </div>
                 </div>
-                <div className="bg-card border border-border rounded-xl p-4 flex items-center gap-4">
-                    <div className="p-3 rounded-lg bg-success/10">
-                        <Users className="w-5 h-5 text-success" />
-                    </div>
-                    <div>
-                        <p className="text-2xl font-bold">{members.filter((m) => m.isActive !== false).length}</p>
-                        <p className="text-sm text-muted-foreground">Active Members</p>
-                    </div>
-                </div>
-                <div className="bg-card border border-border rounded-xl p-4 flex items-center gap-4">
-                    <div className="p-3 rounded-lg bg-accent/10">
-                        <Users className="w-5 h-5 text-accent" />
-                    </div>
-                    <div>
-                        <p className="text-2xl font-bold">
-                            {members.filter((m) => m.membershipType === 'premium').length}
-                        </p>
-                        <p className="text-sm text-muted-foreground">Premium Members</p>
-                    </div>
-                </div>
             </div>
 
             {/* Filters */}
-            <div className="flex flex-col md:flex-row gap-4">
-                <div className="relative flex-1">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                    <Input
-                        placeholder="Search by name, email, or member ID..."
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                        className="pl-10"
-                    />
-                </div>
-                <Tabs value={statusFilter} onValueChange={setStatusFilter}>
-                    <TabsList>
-                        <TabsTrigger value="all">All</TabsTrigger>
-                        <TabsTrigger value="active">Active</TabsTrigger>
-                        <TabsTrigger value="inactive">Inactive</TabsTrigger>
-                    </TabsList>
-                </Tabs>
+            <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <Input
+                    placeholder="Search by name, email, or member ID..."
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    className="pl-10"
+                />
             </div>
 
             {/* Results Count */}
