@@ -3,6 +3,8 @@ import { getStats } from '../services/api';
 import { motion } from 'framer-motion';
 import { BookOpen, Users, ArrowLeftRight, AlertTriangle } from 'lucide-react';
 import { StatCard } from '../components/dashboard/StatCard';
+import { Link } from 'react-router-dom';
+import { Button } from '../components/ui/button';
 
 const Dashboard = () => {
     const [stats, setStats] = useState({
@@ -12,10 +14,6 @@ const Dashboard = () => {
         overdue_books: 0
     });
 
-    useEffect(() => {
-        loadStats();
-    }, []);
-
     const loadStats = async () => {
         try {
             const data = await getStats();
@@ -24,6 +22,10 @@ const Dashboard = () => {
             console.error("Failed to load stats", error);
         }
     };
+
+    useEffect(() => {
+        loadStats();
+    }, []);
 
     return (
         <motion.div
@@ -70,12 +72,12 @@ const Dashboard = () => {
                 <div className="lg:col-span-2 bg-card border border-border rounded-2xl p-6 shadow-sm">
                     <h3 className="text-lg font-semibold mb-4">Quick Actions</h3>
                     <div className="flex gap-4">
-                        <a href="/issue-return" className="inline-flex items-center justify-center rounded-xl text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
-                            Issue a Book
-                        </a>
-                        <a href="/books" className="inline-flex items-center justify-center rounded-xl text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-10 px-4 py-2">
-                            Add New Book
-                        </a>
+                        <Button asChild>
+                            <Link to="/issue-return">Issue a Book</Link>
+                        </Button>
+                        <Button asChild variant="secondary">
+                            <Link to="/members">Add Member</Link>
+                        </Button>
                     </div>
                 </div>
 
